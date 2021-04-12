@@ -1,0 +1,47 @@
+# Given a string s, return the longest palindromic substring in s.
+
+# https://leetcode.com/problems/longest-palindromic-substring/
+
+class Solution:
+    def longestPalindrome(self, s):
+        if is_palindrome(s):
+            return s
+        palindromes = set([])
+        for i in range(len(s)):
+            j = i
+            while j < len(s):
+                if is_palindrome(s[i:j + 1]):
+                    palindromes.add(s[i:j + 1])
+                    j += 1
+                else:
+                    j += 1
+
+        if len(palindromes) > 1:
+            longest_palindrome = palindromes.pop()
+            while len(palindromes) > 0:
+                longest = palindromes.pop()
+                if len(longest) > len(longest_palindrome):
+                    longest_palindrome = longest
+
+            return longest_palindrome
+        else:
+            return palindromes.pop()
+
+def is_palindrome(s):
+    i = 0
+    j = len(s) - 1
+    palindrome = True
+
+    while i < j and palindrome:
+        if s[i] != s[j]:
+            palindrome = False
+        i += 1
+        j -= 1
+
+    if palindrome:
+        return True
+    else:
+        return False
+
+s = "321012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210012321001232100123210123210012321001232100123210123"
+print(str(Solution().longestPalindrome(s)))
